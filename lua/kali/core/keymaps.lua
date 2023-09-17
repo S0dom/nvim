@@ -75,6 +75,3 @@ keymap('n', '<leader><leader>h', ":lua require('smart-splits').swap_buf_left()<C
 keymap('n', '<leader><leader>j', ":lua require('smart-splits').swap_buf_down()<CR>", opts)
 keymap('n', '<leader><leader>k', ":lua require('smart-splits').swap_buf_up()<CR>", opts)
 keymap('n', '<leader><leader>l', ":lua require('smart-splits').swap_buf_right()<CR>", opts)
-
--- Explorer
-keymap('n', '<leader>e', ":Neotree<CR>", opts)

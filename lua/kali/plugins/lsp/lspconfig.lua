@@ -4,7 +4,6 @@ return {
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",
         { "antosha417/nvim-lsp-file-operations", config = true },
-        "folke/which-key.nvim",
     },
     config = function()
         local lspconfig = require("lspconfig")
@@ -12,8 +11,6 @@ return {
         local keymap = vim.keymap.set
         local opts = { noremap = true, silent = true }
         local on_attach = function(client, bufnr)
-            opts.buffer = bufnr
-
             -- set keymap
             opts.desc = "Show LSP references"
             keymap("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
@@ -37,31 +34,22 @@ return {
             keymap("n", "<leader>lr", vim.lsp.buf.rename, opts) -- smart rename
 
             opts.desc = "Show buffer diagnostics"
-            keymap("n", "<leader>dD", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show diagnostics for file
+            keymap("n", "<leader>ldD", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show diagnostics for file
 
             opts.desc = "Show line diagnostics"
-            keymap("n", "<leader>dd", vim.diagnostic.open_float, opts) -- show diagnostics for line
+            keymap("n", "<leader>ldd", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
             opts.desc = "Go to next diagnostic"
-            keymap("n", "<leader>dn", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
+            keymap("n", "<leader>ldn", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
             opts.desc = "Go to previous diagnostic"
-            keymap("n", "<leader>dp", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+            keymap("n", "<leader>ldp", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
 
             opts.desc = "Show documentation for what is under cursor"
             keymap("n", "<leader>lK", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
             opts.desc = "Restart LSP"
             keymap("n", "<leader>lR", "<cmd>LspRestart<CR>", opts) -- mapping to restart lsp if necessary
-
-            require("which-key").register({
-                ["<leader>l"] = {
-                    name = "+LSP",
-                },
-                ["<leader>d"] = {
-                    name = "+Diagnostics",
-                }
-            }, { buffer = bufnr, silent = true, noremap = true } )
 
             require("illuminate").on_attach(client)
         end
@@ -70,6 +58,39 @@ return {
         local capabilities = cmp_nvim_lsp.default_capabilities()
 
         lspconfig["html"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+        })
+
+        lspconfig["emmet_language_server"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte",
+                "pug", "typescriptreact", "vue" },
+            init_options = {
+                --- @type table<string, any> https://docs.emmet.io/customization/preferences/
+                preferences = {},
+                --- @type "always" | "never" defaults to `"always"`
+                showexpandedabbreviation = "always",
+                --- @type boolean defaults to `true`
+                showabbreviationsuggestions = true,
+                --- @type boolean defaults to `false`
+                showsuggestionsassnippets = false,
+                --- @type table<string, any> https://docs.emmet.io/customization/syntax-profiles/
+                syntaxprofiles = {},
+                --- @type table<string, string> https://docs.emmet.io/customization/snippets/#variables
+                variables = {},
+                --- @type string[]
+                excludelanguages = {},
+            },
+        })
+
+        lspconfig["cssls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+        })
+
+        lspconfig["tsserver"].setup({
             capabilities = capabilities,
             on_attach = on_attach,
         })
@@ -83,7 +104,7 @@ return {
                     client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
                         Lua = {
                             diagnostics = {
-                                globals = {"vim"},
+                                globals = { "vim" },
                             },
                             -- Make the server aware of Neovim runtime files
                             workspace = {
@@ -121,6 +142,11 @@ return {
             capabilities = capabilities,
             on_attach = on_attach,
             filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+        })
+
+        lspconfig["lemminx"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
         })
     end,
 }

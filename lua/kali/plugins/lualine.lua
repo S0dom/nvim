@@ -251,6 +251,6 @@ return {
         }
 
         -- Now don't forget to initialize lualine
-        lualine.setup(config) 
+        lualine.setup(config)
     end
 }

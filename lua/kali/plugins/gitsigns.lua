@@ -80,18 +80,6 @@ return {
 
                 -- Text object
                 map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = "Select hunk" })
-
-                require("which-key").register({
-                    ["<leader>g"] = {
-                        name = "+Git",
-                        h = {
-                            name = "+Hunk",
-                        },
-                        t = {
-                            name = "+Toggle",
-                        }
-                    }
-                }, { buffer = bufnr, silent = true, noremap = true } )
             end
         }
     end

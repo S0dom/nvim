@@ -6,6 +6,7 @@ return {
         "hrsh7th/cmp-path",   -- source for file system paths
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-cmdline",
+        "hrsh7th/cmp-nvim-lsp-signature-help",
         "saadparwaiz1/cmp_luasnip",     -- for autocompletion
         -- "rcarriga/cmp-dap",
         "onsails/lspkind.nvim",
@@ -63,6 +64,7 @@ return {
             }),
             -- sources for autocompletion
             sources = cmp.config.sources({
+                { name = "nvim_lsp_signature_help" },
                 { name = "nvim_lua"}, -- nvim integration
                 { name = "nvim_lsp", keyword_length = 1 }, -- LSP
                 { name = "luasnip",  keyword_length = 1 }, -- snippets

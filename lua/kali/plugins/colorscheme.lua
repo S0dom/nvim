@@ -115,6 +115,10 @@ return {
                 },
                 ufo = true,
                 which_key = false,
+                illuminate = {
+                    enabled = true,
+                    lsp = false,
+                },
 
                 -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
             },

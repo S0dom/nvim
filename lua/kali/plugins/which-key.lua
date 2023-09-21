@@ -109,6 +109,9 @@ return {
             ["<leader>ld"] = { name = "+Diagnostics" },
             ["<leader>g"] = { name = "+git" },
             ["<leader>gh"] = { name = "+hunk" },
+            ["<leader>gt"] = { name = "+toggle" },
+            ["<leader>d"] = { name = "+debug" },
+            ["<leader>da"] = { name = "+adapters" },
         })
         local map_opts = {
             mode = "n", -- NORMAL mode

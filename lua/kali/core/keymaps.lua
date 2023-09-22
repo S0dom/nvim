@@ -75,3 +75,13 @@ keymap('n', '<leader><leader>h', ":lua require('smart-splits').swap_buf_left()<C
 keymap('n', '<leader><leader>j', ":lua require('smart-splits').swap_buf_down()<CR>", opts)
 keymap('n', '<leader><leader>k', ":lua require('smart-splits').swap_buf_up()<CR>", opts)
 keymap('n', '<leader><leader>l', ":lua require('smart-splits').swap_buf_right()<CR>", opts)
+
+-- Exit and save
+opts.desc = "Write"
+keymap('n', '<leader>w', ":w<CR>", opts)
+
+opts.desc = "Quit"
+keymap('n', '<leader>q', ":q<CR>", opts)
+
+opts.desc = "Quit all"
+keymap('n', '<leader>Q', ":qa<CR>", opts)

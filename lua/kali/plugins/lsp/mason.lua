@@ -14,6 +14,9 @@ return {
                 "lua_ls",
                 "html",
                 "jdtls",
+                "pyright",
+                "gopls",
+                "rust_analyzer"
                 -- "volar",
             },
             -- auto-install configured servers (with lspconfig)

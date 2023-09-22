@@ -182,6 +182,28 @@ return {
                 capabilities = capabilities,
                 on_attach = on_attach,
             })
+
+            lspconfig["pyright"].setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+            })
+
+            lspconfig["gopls"].setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+            })
+
+            lspconfig["rust_analyzer"].setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+                settings = {
+                    ["rust-analyzer"] = {
+                        diagnostics = {
+                            enable = true,
+                        }
+                    }
+                }
+            })
         end,
     }
 }

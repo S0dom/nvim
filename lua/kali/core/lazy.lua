@@ -15,6 +15,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Install your plugins here
-require("lazy").setup({{import = "kali.plugins"}, {import = "kali.plugins.lsp"}},{
+require("lazy").setup({{import = "kali.plugins"}, {import = "kali.plugins.lsp"}, {import = "kali.plugins.pde"}},{
 
 })

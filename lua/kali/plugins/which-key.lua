@@ -112,6 +112,7 @@ return {
             ["<leader>gt"] = { name = "+toggle" },
             ["<leader>d"] = { name = "+debug" },
             ["<leader>da"] = { name = "+adapters" },
+            ["<leader>lc"] = { name = "+Crates" },
         })
         local map_opts = {
             mode = "n", -- NORMAL mode
@@ -135,18 +136,5 @@ return {
         }
 
         wk.register(mappings, map_opts)
-
-        -- local opts = {
-        --     mode = "n",      -- NORMAL mode
-        --     prefix = "<leader>",
-        --     buffer = nil,    -- Global mappings. Specify a buffer number for buffer local mappings
-        --     silent = true,   -- use `silent` when creating keymaps
-        --     noremap = true,  -- use `noremap` when creating keymaps
-        --     nowait = true,   -- use `nowait` when creating keymaps
-        --     expr = false,    -- use `expr` when creating keymaps
-        -- }
-        -- local mappings = {
-        --
-        -- }
     end
 }

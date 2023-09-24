@@ -16,7 +16,8 @@ return {
                 "jdtls",
                 "pyright",
                 "gopls",
-                "rust_analyzer"
+                "rust_analyzer",
+                "clangd",
                 -- "volar",
             },
             -- auto-install configured servers (with lspconfig)

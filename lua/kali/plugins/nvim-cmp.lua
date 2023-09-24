@@ -7,7 +7,12 @@ return {
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-cmdline",
         "hrsh7th/cmp-nvim-lsp-signature-help",
-        "saadparwaiz1/cmp_luasnip",     -- for autocompletion
+        "saadparwaiz1/cmp_luasnip", -- for autocompletion
+        {
+            "saecki/crates.nvim",
+            event = { "BufRead Cargo.toml" },
+            config = true,
+        },
         -- "rcarriga/cmp-dap",
         "onsails/lspkind.nvim",
     },
@@ -28,7 +33,7 @@ return {
                 end,
             },
             formatting = {
-                format = lspkind.cmp_format{
+                format = lspkind.cmp_format {
                     with_text = true,
                     menu = {
                         buffer = "[BUF]",
@@ -41,7 +46,8 @@ return {
             },
             mapping = cmp.mapping.preset.insert({
                 ["<TAB>"] = cmp.mapping.select_next_item(),
-                ["<S-TAB>"] = cmp.mapping.select_prev_item(),                ["<C-k>"] = cmp.mapping.scroll_docs(-4),
+                ["<S-TAB>"] = cmp.mapping.select_prev_item(),
+                ["<C-k>"] = cmp.mapping.scroll_docs(-4),
                 ["<C-j>"] = cmp.mapping.scroll_docs(4),
                 ["<C-Space>"] = cmp.mapping({
                     i = function()
@@ -64,15 +70,20 @@ return {
             }),
             -- sources for autocompletion
             sources = cmp.config.sources({
-                { name = "nvim_lsp_signature_help" },
-                { name = "nvim_lua"}, -- nvim integration
+                { name = "nvim_lua" },                     -- nvim integration
+                { name = "crates" },
                 { name = "nvim_lsp", keyword_length = 1 }, -- LSP
                 { name = "luasnip",  keyword_length = 1 }, -- snippets
                 { name = "buffer",   keyword_length = 3 }, -- text within current buffer
-                { name = "path" },                       -- file system paths
+                { name = "path" },                         -- file system paths
             }),
             experimental = {
                 ghost_text = true, -- this feature conflict with copilot.vim's preview.
+            },
+            sorting = {
+                comparators = {
+                    require("clangd_extensions.cmp_scores"),
+                }
             }
         })
     end

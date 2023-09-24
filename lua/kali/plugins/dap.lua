@@ -49,8 +49,13 @@ return {
                     "python",
                     "delve",
                     "codelldb",
+                    "javadbg",
+                    "javatest",
                 },
             },
+        },
+        {
+            "nvim-telescope/telescope-dap.nvim"
         },
     },
     -- stylua: ignore

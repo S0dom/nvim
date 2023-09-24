@@ -1,7 +1,7 @@
 return {
     {
         "leoluz/nvim-dap-go",
-        ft = {"go", "gomod" },
+        ft = { "go", "gomod" },
         config = function()
             local mason_path = vim.fn.glob(vim.fn.stdpath("data") .. "/mason/")
             require('dap-go').setup {
@@ -52,7 +52,11 @@ return {
                 "nvim-treesitter/nvim-treesitter",
             },
             config = function()
-                require("go").setup()
+                require("go").setup({
+                    lsp_inaly_hints = {
+                        enable = true,
+                    }
+                })
             end,
             -- event = { "CmdlineEnter" },
             ft = { "go", 'gomod' },

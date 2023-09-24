@@ -113,6 +113,7 @@ return {
             ["<leader>d"] = { name = "+debug" },
             ["<leader>da"] = { name = "+adapters" },
             ["<leader>lc"] = { name = "+Crates" },
+            ["<leader>lj"] = { name = "+Java" },
         })
         local map_opts = {
             mode = "n", -- NORMAL mode

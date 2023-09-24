@@ -53,7 +53,7 @@ local on_attach = function(client, bufnr)
     --         return "<c-b>"
     --     end
     -- end, { silent = true, expr = true, desc = "Scroll up" })
-
+    
     require("illuminate").on_attach(client)
 
     opts.desc = "Format"

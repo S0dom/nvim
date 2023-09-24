@@ -107,7 +107,7 @@ return {
                                 },
                                 completion = {
                                     callSnippet = "Replace"
-                                }
+                                },
                                 -- runtime = {
                                 --     -- Tell the language server which version of Lua you're using
                                 --     -- (most likely LuaJIT in the case of Neovim)
@@ -122,10 +122,10 @@ return {
                 end
             })
 
-            lspconfig["jdtls"].setup({
-                capabilities = capabilities,
-                on_attach = on_attach,
-            })
+            -- lspconfig["jdtls"].setup({
+            --     capabilities = capabilities,
+            --     on_attach = on_attach,
+            -- })
 
             lspconfig["volar"].setup({
                 capabilities = capabilities,
@@ -146,6 +146,18 @@ return {
             lspconfig["gopls"].setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
+                settings = {
+                    gopls = {
+                        hints = {
+                            assignVariableTypes = true,
+                            compositeLiteralFields = true,
+                            constantValues = true,
+                            functionTypeParameters = true,
+                            parameterNames = true,
+                            rangeVariableTypes = true,
+                        },
+                    },
+                },
             })
 
             -- lspconfig["rust_analyzer"].setup({

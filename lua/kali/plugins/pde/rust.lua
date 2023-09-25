@@ -9,6 +9,55 @@ end
 
 return {
     {
+        "saecki/crates.nvim",
+        ft = { "rust", "toml" },
+        event = { "BufRead Cargo.toml" },
+        config = function(_, opts)
+            local crates = require("crates")
+            crates.setup(opts)
+            crates.show()
+            vim.api.nvim_create_autocmd({ "BufEnter" }, {
+                pattern = { "Cargo.toml" },
+                callback = function(event)
+                    local whichkey = require("which-key")
+                    whichkey.register({ ["<leader>lc"] = { name = "+Crates" } })
+                    local crates = require('crates')
+
+                    vim.keymap.set('n', '<leader>lct', crates.toggle, { silent = true, desc = "Toggle Crates" })
+                    vim.keymap.set('n', '<leader>lcr', crates.reload, { silent = true, desc = "Reload Crates" })
+
+                    vim.keymap.set('n', '<leader>lcv', crates.show_versions_popup,
+                        { silent = true, desc = "Show Version Popup" })
+                    vim.keymap.set('n', '<leader>lcf', crates.show_features_popup,
+                        { silent = true, desc = "Show Feature Popup" })
+                    vim.keymap.set('n', '<leader>lcd', crates.show_dependencies_popup,
+                        { silent = true, desc = "Show Dependencies Popup" })
+
+                    vim.keymap.set('n', '<leader>lcu', crates.update_crate, { silent = true, desc = "Update Crate" })
+                    vim.keymap.set('v', '<leader>lcu', crates.update_crates, { silent = true, desc = "Update Crates" })
+                    vim.keymap.set('n', '<leader>lca', crates.update_all_crates,
+                        { silent = true, desc = "Update All Crates" })
+                    vim.keymap.set('n', '<leader>lcU', crates.upgrade_crate, { silent = true, desc = "Upgrade Crate" })
+                    vim.keymap.set('v', '<leader>lcU', crates.upgrade_crates, { silent = true, desc = "Upgrade Crates" })
+                    vim.keymap.set('n', '<leader>lcA', crates.upgrade_all_crates,
+                        { silent = true, desc = "Upgrade Alle Crates" })
+
+                    vim.keymap.set('n', '<leader>lce', crates.expand_plain_crate_to_inline_table,
+                        { silent = true, desc = "Expand to Table" })
+                    vim.keymap.set('n', '<leader>lcE', crates.extract_crate_into_table,
+                        { silent = true, desc = "Extract into Table" })
+
+                    vim.keymap.set('n', '<leader>lcH', crates.open_homepage, { silent = true, desc = "Open Homepage" })
+                    vim.keymap.set('n', '<leader>lcR', crates.open_repository,
+                        { silent = true, desc = "Open Repository" })
+                    vim.keymap.set('n', '<leader>lcD', crates.open_documentation,
+                        { silent = true, desc = "Open Documentation" })
+                    vim.keymap.set('n', '<leader>lcC', crates.open_crates_io, { silent = true, desc = "Open Crates IO" })
+                end,
+            })
+        end,
+    },
+    {
         "simrat39/rust-tools.nvim",
         ft = { "rust" },
         dependencies = {
@@ -43,23 +92,6 @@ return {
                 on_attach_add(client, bufnr)
             end
             local codelldb_path, liblldb_path = get_codelldb()
-            vim.api.nvim_create_autocmd({ "BufEnter" }, {
-                pattern = { "Cargo.toml" },
-                callback = function(event)
-                    local bufnr = event.buf
-
-                    vim.keymap.set("n", "<leader>lcy", "<cmd>lua require'crates'.open_repository()<cr>",
-                        { desc = "Open Repository", noremap = true, silent = true })
-                    vim.keymap.set("n", "<leader>lcp", "<cmd>lua require'crates'.show_popup()<cr>",
-                        { desc = "Show Popup", noremap = true, silent = true })
-                    vim.keymap.set("n", "<leader>lci", "<cmd>lua require'crates'.show_crate_popup()<cr>",
-                        { desc = "Show Info", noremap = true, silent = true })
-                    vim.keymap.set("n", "<leader>lcf", "<cmd>lua require'crates'.show_features_popup()<cr>",
-                        { desc = "Show Features", noremap = true, silent = true })
-                    vim.keymap.set("n", "<leader>lcd", "<cmd>lua require'crates'.show_dependencies_popup()<cr>",
-                        { desc = "Show Dependencies", noremap = true, silent = true })
-                end,
-            })
             rt.setup({
                 tools = {
                     autoSetHints = true,
@@ -95,15 +127,5 @@ return {
                 },
             })
         end
-    },
-    {
-        "saecki/crates.nvim",
-        ft = { "rust", "toml" },
-        event = { "BufRead Cargo.toml" },
-        config = function(_, opts)
-            local crates = require("crates")
-            crates.setup(opts)
-            crates.show()
-        end,
     },
 }

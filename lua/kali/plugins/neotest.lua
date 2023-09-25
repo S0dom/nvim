@@ -73,7 +73,7 @@ return {
     config = function()
         require("neotest").setup({
             adapters = {
-                -- require("neotest-vim-test"),
+                require("neotest-vim-test"),
                 require("neotest-rust"),
                 require("neotest-java")
             }

@@ -42,22 +42,29 @@ local on_attach = function(client, bufnr)
     opts.desc = "Restart LSP"
     keymap("n", "<leader>lR", "<cmd>LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 
-    -- keymap({ "n", "i", "s" }, "<c-j>", function()
-    --     if not require("noice.lsp").scroll(4) then
-    --         return "<c-f>"
-    --     end
-    -- end, { silent = true, expr = true, desc = "Scroll down" })
-    --
-    -- keymap({ "n", "i", "s" }, "<c-k>", function()
-    --     if not require("noice.lsp").scroll(-4) then
-    --         return "<c-b>"
-    --     end
-    -- end, { silent = true, expr = true, desc = "Scroll up" })
-    
     require("illuminate").on_attach(client)
 
     opts.desc = "Format"
     keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
+
+    if client.supports_method("textDocument/formatting") then
+        local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            group = augroup,
+            buffer = bufnr,
+            callback = function()
+                vim.notify(
+                    "Formatting file using: " .. client.name,
+                    vim.log.levels.INFO,
+                    { title = "Formatting" }
+                )
+                vim.lsp.buf.format({
+                    bufnr = bufnr,
+                })
+            end,
+        })
+    end
 end
 
 local cmp_nvim_lsp = require("cmp_nvim_lsp")

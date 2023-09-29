@@ -6,7 +6,23 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-treesitter/nvim-treesitter",
         "antoinemadec/FixCursorHold.nvim",
-        "andy-bell101/neotest-java",
+        "nvim-neotest/neotest-python",
+        "nvim-neotest/neotest-go",
+        {
+            "vim-test/vim-test",
+            opts = {
+                setup = {}
+            },
+            config = function(plugin, opts)
+                vim.g["test#strategy"] = "neovim"
+                vim.g["test#neovim#term_position"] = "belowright"
+                vim.g["test#neovim#preserve_screen"] = 1
+
+                for k, _ in pairs(opts.setup) do
+                    opts.setup[k](plugin, opts)
+                end
+            end,
+        }
     },
     keys = {
         {
@@ -73,9 +89,19 @@ return {
     config = function()
         require("neotest").setup({
             adapters = {
-                require("neotest-vim-test"),
+                require("neotest-vim-test") {
+                    -- ignore_file_types = { "python", "vim", "lua" },
+                },
                 require("neotest-rust"),
-                require("neotest-java")
+                require("neotest-python")({
+                    dap = {
+                        justMyCode = false,
+                        console = "integratedTerminal",
+                    },
+                    args = { "--log-level", "DEBUG", "--quiet" },
+                    runner = "pytest",
+                }),
+                require("neotest-go"),
             }
         })
     end

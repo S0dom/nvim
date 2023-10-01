@@ -15,6 +15,7 @@ return {
         },
         -- "rcarriga/cmp-dap",
         "onsails/lspkind.nvim",
+        "saecki/crates.nvim",
     },
     config = function()
         local cmp = require("cmp")
@@ -71,11 +72,11 @@ return {
             -- sources for autocompletion
             sources = cmp.config.sources({
                 { name = "nvim_lua" },                     -- nvim integration
-                { name = "crates" },
                 { name = "nvim_lsp", keyword_length = 1 }, -- LSP
                 { name = "luasnip",  keyword_length = 1 }, -- snippets
                 { name = "buffer",   keyword_length = 3 }, -- text within current buffer
                 { name = "path" },                         -- file system paths
+                { name = "crates" },
             }),
             experimental = {
                 ghost_text = true, -- this feature conflict with copilot.vim's preview.

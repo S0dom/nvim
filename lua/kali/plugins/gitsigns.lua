@@ -1,7 +1,7 @@
 return {
     "lewis6991/gitsigns.nvim",
-    config = function()
-        require('gitsigns').setup {
+    opts = function()
+        return {
             signs = {
                 add          = { text = '▎' },
                 change       = { text = '▎' },
@@ -10,9 +10,9 @@ return {
                 changedelete = { text = '▎' },
                 untracked    = { text = '▎' },
             },
-            signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
-            numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
-            linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
+            signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
+            numhl = false,     -- Toggle with `:Gitsigns toggle_numhl`
+            linehl = false,    -- Toggle with `:Gitsigns toggle_linehl`
             word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
             watch_gitdir = {
                 follow_files = true
@@ -28,7 +28,7 @@ return {
             current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
             sign_priority = 6,
             update_debounce = 100,
-            status_formatter = nil,   -- Use default
+            status_formatter = nil,  -- Use default
             max_file_length = 40000, -- Disable if file is longer than this (in lines)
             preview_config = {
                 -- Options passed to nvim_open_win
@@ -66,8 +66,10 @@ return {
                 -- Actions
                 map('n', '<leader>ghs', gs.stage_hunk, { desc = "Stage hunk" })
                 map('n', '<leader>ghr', gs.reset_hunk, { desc = "Reset hunk" })
-                map('v', '<leader>ghs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, { desc = "Stage hunk" })
-                map('v', '<leader>ghr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, { desc = "Reset hunk" })
+                map('v', '<leader>ghs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+                    { desc = "Stage hunk" })
+                map('v', '<leader>ghr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+                    { desc = "Reset hunk" })
                 map('n', '<leader>ghS', gs.stage_buffer, { desc = "Stage buffer" })
                 map('n', '<leader>ghu', gs.undo_stage_hunk, { desc = "Undo stage hunk" })
                 map('n', '<leader>ghR', gs.reset_buffer, { desc = "Reset buffer" })

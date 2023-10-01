@@ -1,9 +1,8 @@
 return {
     {
         "folke/neodev.nvim",
-        config = function()
-            local neodev = require("neodev")
-            neodev.setup({
+        opts = function()
+            return {
                 library = {
                     enabled = true,                                       -- when not enabled, neodev will not change any settings to the LSP server
                     -- these settings will be used for your Neovim config directory
@@ -25,9 +24,8 @@ return {
                 -- much faster, but needs a recent built of lua-language-server
                 -- needs lua-language-server >= 3.6.0
                 pathStrict = true,
-            })
+            }
         end
-
     },
     {
         "neovim/nvim-lspconfig",
@@ -35,6 +33,69 @@ return {
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             { "antosha417/nvim-lsp-file-operations", config = true },
+        },
+        opts = {
+            setup = {
+                omnisharp = function()
+                    local lsp_utils = require "base.lsp.utils"
+                    lsp_utils.on_attach(function(client, bufnr)
+                        if client.name == "omnisharp" then
+                            local map = function(mode, lhs, rhs, desc)
+                                if desc then
+                                    desc = desc
+                                end
+                                vim.keymap.set(mode, lhs, rhs,
+                                    { silent = true, desc = desc, buffer = bufnr, noremap = true })
+                            end
+
+                            -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483
+                            local function toSnakeCase(str)
+                                return string.gsub(str, "%s*[- ]%s*", "_")
+                            end
+
+                            local tokenModifiers = client.server_capabilities.semanticTokensProvider.legend
+                                .tokenModifiers
+                            for i, v in ipairs(tokenModifiers) do
+                                tokenModifiers[i] = toSnakeCase(v)
+                            end
+                            local tokenTypes = client.server_capabilities.semanticTokensProvider.legend.tokenTypes
+                            for i, v in ipairs(tokenTypes) do
+                                tokenTypes[i] = toSnakeCase(v)
+                            end
+
+                            -- C# keymappings
+                            -- stylua: ignore
+                            map("n", "<leader>td",
+                                "<cmd>w|lua require('neotest').run.run({vim.fn.expand('%'), strategy = require('neotest-dotnet.strategies.netcoredbg'), is_custom_dotnet_debug = true})<cr>",
+                                "Debug File")
+
+                            -- stylua: ignore
+                            map("n", "<leader>tL",
+                                "<cmd>w|lua require('neotest').run.run_last({strategy = require('neotest-dotnet.strategies.netcoredbg'), is_custom_dotnet_debug = true})<cr>",
+                                "Debug Last")
+
+                            -- stylua: ignore
+                            map("n", "<leader>tN",
+                                "<cmd>w|lua require('neotest').run.run({strategy = require('neotest-dotnet.strategies.netcoredbg'), is_custom_dotnet_debug = true})<cr>",
+                                "Debug Nearest")
+                        end
+                    end)
+                end,
+                -- eslint = function()
+                --     vim.api.nvim_create_autocmd("BufWritePre", {
+                --         callback = function(event)
+                --             local client = vim.lsp.get_active_clients({ bufnr = event.buf, name = "eslint" })[1]
+                --             if client then
+                --                 local diag = vim.diagnostic.get(event.buf,
+                --                     { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
+                --                 if #diag > 0 then
+                --                     vim.cmd "EslintFixAll"
+                --                 end
+                --             end
+                --         end,
+                --     })
+                -- end,
+            },
         },
         config = function()
             local lspconfig = require("lspconfig")
@@ -46,6 +107,8 @@ return {
             lspconfig["html"].setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
+                filetypes = { "html", "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact",
+                    "typescript.tsx" }
             })
 
             lspconfig["emmet_language_server"].setup({
@@ -68,6 +131,11 @@ return {
                     variables = {},
                     --- @type string[]
                     excludelanguages = {},
+                    html = {
+                        options = {
+                            ["bem.enabled"] = true,
+                        },
+                    },
                 },
             })
 
@@ -76,9 +144,40 @@ return {
                 on_attach = on_attach,
             })
 
-            lspconfig["tsserver"].setup({
+            -- lspconfig["tsserver"].setup({
+            --     capabilities = capabilities,
+            --     on_attach = on_attach,
+            --     settings = {
+            --         typescript = {
+            --             format = {
+            --                 indentSize = vim.o.shiftwidth,
+            --                 convertTabsToSpaces = vim.o.expandtab,
+            --                 tabSize = vim.o.tabstop,
+            --             }
+            --         },
+            --         javascript = {
+            --             format = {
+            --                 indentSize = vim.o.shiftwidth,
+            --                 convertTabsToSpaces = vim.o.expandtab,
+            --                 tabSize = vim.o.tabstop,
+            --             }
+            --         },
+            --         completion = {
+            --             completeFunctionCalls = true,
+            --         },
+            --     },
+            -- })
+
+            lspconfig["tailwindcss"].setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
+                filetype_exlude = { "markdown" }
+            })
+
+            lspconfig["eslint"].setup({
+                settings = {
+                    workingDirecctory = { mode = "auto" },
+                }
             })
 
             lspconfig["lua_ls"].setup({
@@ -122,15 +221,10 @@ return {
                 end
             })
 
-            -- lspconfig["jdtls"].setup({
-            --     capabilities = capabilities,
-            --     on_attach = on_attach,
-            -- })
-
             lspconfig["volar"].setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
-                filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+                filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' }, --, 'json' },
             })
 
             lspconfig["lemminx"].setup({
@@ -161,20 +255,6 @@ return {
                 },
             })
 
-            -- lspconfig["rust_analyzer"].setup({
-            --     capabilities = capabilities,
-            --     on_attach = on_attach,
-            --     filetypes = { "rust" },
-            --     -- root_dir = util.root_pattern("Cargo.toml"),
-            --     settings = {
-            --         ["rust-analyzer"] = {
-            --             cargo = {
-            --                 allFeatures = true,
-            --             },
-            --         }
-            --     }
-            -- })
-
             lspconfig["taplo"].setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
@@ -188,6 +268,19 @@ return {
                     require("clangd_extensions.inlay_hints").set_inlay_hints()
                 end,
             })
+
+            lspconfig["jsonls"].setup {
+                capabilities = capabilities,
+                on_attach = on_attach,
+            }
+
+            lspconfig["omnisharp"].setup {
+                capabilities = capabilities,
+                on_attach = on_attach,
+                cmd = { "dotnet", "/home/kali/.local/share/nvim/mason/packages/omnisharp/libexec/OmniSharp.dll" },
+                organize_imports_on_format = true,
+                enable_import_completion = true,
+            }
         end,
     },
     {

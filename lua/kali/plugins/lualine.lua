@@ -3,10 +3,7 @@ return {
     dependencies = {
         "nvim-tree/nvim-web-devicons",
     },
-    config = function()
-        -- Eviline config for lualine
-        -- Author: shadmansaleh
-        -- Credit: glepnir
+    opts = function()
         local lualine = require('lualine')
 
         local navic = require("nvim-navic")

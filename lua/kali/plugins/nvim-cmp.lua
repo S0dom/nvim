@@ -17,14 +17,14 @@ return {
         "onsails/lspkind.nvim",
         "saecki/crates.nvim",
     },
-    config = function()
+    opts = function()
         local cmp = require("cmp")
 
         local luasnip = require("luasnip")
 
         local lspkind = require("lspkind")
 
-        cmp.setup({
+        return {
             completion = {
                 completeopt = "menu,menueone,noselect" --preview,noselect",
             },
@@ -43,7 +43,7 @@ return {
                         path = "[PATH]",
                         luasnip = "[SNIP]",
                     }
-                }
+                },
             },
             mapping = cmp.mapping.preset.insert({
                 ["<TAB>"] = cmp.mapping.select_next_item(),
@@ -85,7 +85,7 @@ return {
                 comparators = {
                     require("clangd_extensions.cmp_scores"),
                 }
-            }
-        })
-    end
+            },
+        }
+    end,
 }

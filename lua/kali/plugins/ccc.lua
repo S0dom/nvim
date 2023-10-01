@@ -1,6 +1,7 @@
 return {
     "uga-rosa/ccc.nvim",
-    config = function()
-
-    end
+    keys = {
+        { "<leader>lzp", "<cmd>CccPick<CR>",    desc = "Pick" },
+        { "<leader>lzc", "<cmd>CccConvert<CR>", desc = "Convert" },
+    },
 }

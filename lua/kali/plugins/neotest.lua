@@ -86,8 +86,8 @@ return {
             "Summary"
         },
     },
-    config = function()
-        require("neotest").setup({
+    opts = function()
+        return {
             adapters = {
                 require("neotest-vim-test") {
                     -- ignore_file_types = { "python", "vim", "lua" },
@@ -103,6 +103,6 @@ return {
                 }),
                 require("neotest-go"),
             }
-        })
+        }
     end
 }

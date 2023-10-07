@@ -8,6 +8,7 @@ return {
         "antoinemadec/FixCursorHold.nvim",
         "nvim-neotest/neotest-python",
         "nvim-neotest/neotest-go",
+        "Issafalcon/neotest-dotnet",
         {
             "vim-test/vim-test",
             opts = {
@@ -102,6 +103,7 @@ return {
                     runner = "pytest",
                 }),
                 require("neotest-go"),
+                require("neotest-dotnet"),
             }
         }
     end

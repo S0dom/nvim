@@ -1,7 +1,7 @@
 return {
     "rest-nvim/rest.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    tags = "0.2",
+    ft = "http",
     config = function()
         vim.keymap.set("n", "<leader>r", "<cmd>lua require('rest-nvim').run()<CR>",
             { desc = "Rest calls [Change This to another Keymap]" })

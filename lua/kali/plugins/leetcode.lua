@@ -1,3 +1,4 @@
+-- Command: nvim leetcode.nvim
 return {
     "kawre/leetcode.nvim",
     build = ":TSUpdate html",

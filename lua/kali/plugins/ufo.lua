@@ -9,10 +9,14 @@ return {
                 require("statuscol").setup({
                     relculright = true,
                     segments = {
-                        { text = { builtin.foldfunc },      click = "v:lua.ScFa" },
-                        { text = {" "},                                          },
-                        { text = { "%s" },                  click = "v:lua.ScSa" },
-                        { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+                        { sign = { name = { ".*" }, maxwidth = 1, auto = true },                           click = "v:lua.ScSa" },
+                        { text = { builtin.lnumfunc, " " },                                                click = "v:lua.ScLa" },
+                        { sign = { name = { "Diagnostic*" }, maxwidth = 1, auto = true },                  click = "v:lua.ScSa" },
+                        -- show all in one collumn:
+                        -- { text = { "%s" },                                               click = "v:lua.ScSa" },
+                        { text = { builtin.foldfunc },                                                     click = "v:lua.ScFa" },
+                        -- { text = { " " }, },
+                        { sign = { namespace = { "gitsigns_extmark_signs_" }, maxwidth = 2, auto = true }, click = "v:lua.ScSa" },
                     },
                 })
             end,
@@ -43,7 +47,7 @@ return {
     init = function()
         vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
         vim.o.foldcolumn = "1" -- '0' is not bad
-        vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+        vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
         vim.o.foldlevelstart = 99
         vim.o.foldenable = true
     end,

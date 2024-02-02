@@ -1,5 +1,6 @@
 return {
     "mfussenegger/nvim-dap",
+    event = "VeryLazy",
     dependencies = {
         -- fancy UI for the debugger
         {
@@ -322,7 +323,9 @@ return {
             "DapBreakpointCondition",
             { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" }
         )
-        vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "", linehl = "", numhl = "" })
+        vim.fn.sign_define(
+            "DapBreakpointRejected",
+            { text = "", texthl = "", linehl = "", numhl = "" })
         vim.fn.sign_define(
             "DapLogPoint",
             { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" }

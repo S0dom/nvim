@@ -18,7 +18,7 @@ return {
                 "gopls",
                 "rust_analyzer",
                 "clangd",
-                -- "volar",
+                "volar",
             },
             -- auto-install configured servers (with lspconfig)
             automatic_installation = false, -- not the same as ensure_installed

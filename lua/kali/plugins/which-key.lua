@@ -43,7 +43,7 @@ return {
         icons = {
             breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
             separator = "➜", -- symbol used between a key and it's label
-            group = "+", -- symbol prepended to a group
+            group = "" --"+", -- symbol prepended to a group
         },
         popup_mappings = {
             scroll_down = "<c-d>", -- binding to scroll down inside the popup
@@ -103,18 +103,17 @@ return {
             ["g"] = { name = "+goto" },
             ["]"] = { name = "+next" },
             ["["] = { name = "+prev" },
-            ["<leader><leader>"] = { name = "+Split" },
-            ["<leader>f"] = { name = "+File/Find" },
-            ["<leader>l"] = { name = "+LSP" },
-            ["<leader>ld"] = { name = "+Diagnostics" },
-            ["<leader>g"] = { name = "+Git" },
-            ["<leader>gh"] = { name = "+Hunk" },
-            ["<leader>gt"] = { name = "+Toggle" },
-            ["<leader>d"] = { name = "+Debug" },
+            ["<leader><leader>"] = { name = "+ Split" },
+            ["<leader>f"] = { name = "+󰈞 File/Find" },
+            ["<leader>l"] = { name = "+ LSP" },
+            ["<leader>m"] = { name = "+ MiniMap" },
+            ["<leader>ld"] = { name = "+󰓙 Diagnostics" },
+            ["<leader>d"] = { name = "+󰃤 Debug" },
             ["<leader>da"] = { name = "+Adapters" },
-            ["<leader>lc"] = { name = "+Crates" },
-            ["<leader>lj"] = { name = "+Java" },
-            ["<leader>lz"] = { name = "+Color" },
+            ["<leader>lc"] = { name = "+󰙴 Crates" },
+            ["<leader>lj"] = { name = "+ Java" },
+            ["<leader>lz"] = { name = "+ Color" },
+            ["<leader>t"] = { name = "+󰙨 Test" },
         })
         local map_opts = {
             mode = "n", -- NORMAL mode

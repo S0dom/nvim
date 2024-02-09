@@ -1,3 +1,5 @@
+local icons = require "kali.share.icons"
+
 return {
     "mfussenegger/nvim-dap",
     event = "VeryLazy",
@@ -317,19 +319,23 @@ return {
     config = function()
         vim.fn.sign_define(
             "DapBreakpoint",
-            { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" }
+            { text = icons.debug.Breakpoint, texthl = "DiagnosticSignError", linehl = "", numhl = "" }
         )
         vim.fn.sign_define(
             "DapBreakpointCondition",
-            { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" }
+            { text = icons.debug.BreakpointCondition, texthl = "DiagnosticSignError", linehl = "", numhl = "" }
         )
         vim.fn.sign_define(
             "DapBreakpointRejected",
-            { text = "", texthl = "", linehl = "", numhl = "" })
+            { text = icons.debug.BreakpointRejected, texthl = "DiagnosticSignError", linehl = "", numhl = "" }
+        )
         vim.fn.sign_define(
             "DapLogPoint",
-            { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" }
+            { text = icons.debug.Logpoint, texthl = "DiagnosticSignError", linehl = "", numhl = "" }
         )
-        vim.fn.sign_define("DapStopped", { text = "", texthl = "GitSignsAdd", linehl = "", numhl = "" })
+        vim.fn.sign_define(
+            "DapStopped",
+            { text = icons.debug.Stopped, texthl = "GitSignsAdd", linehl = "", numhl = "" }
+        )
     end,
 }

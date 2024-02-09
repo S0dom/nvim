@@ -1,3 +1,5 @@
+local icons = require "kali.share.icons"
+
 return {
     'goolord/alpha-nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -31,13 +33,14 @@ return {
         }
 
         dashboard.section.buttons.val = {
-            dashboard.button("f", "  Find file", ":Telescope find_files find_command=rg,--hidden,--files <CR>"),
-            dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-            dashboard.button("p", "  Find project", ":Telescope projects <CR>"),
-            dashboard.button("r", "  Recently used files", ":Telescope oldfiles <CR>"),
-            dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
-            dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
-            dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
+            dashboard.button("f", icons.alpha.Find .. "Find file",
+                ":Telescope find_files find_command=rg,--hidden,--files <CR>"),
+            dashboard.button("e", icons.alpha.NewFile .. "New file", ":ene <BAR> startinsert <CR>"),
+            dashboard.button("p", icons.alpha.FindProject .. "Find project", ":Telescope projects <CR>"),
+            dashboard.button("r", icons.alpha.RecentlyUsed .. "Recently used files", ":Telescope oldfiles <CR>"),
+            dashboard.button("t", icons.alpha.FindText .. "Find text", ":Telescope live_grep <CR>"),
+            dashboard.button("c", icons.alpha.Configuration .. "Configuration", ":e ~/.config/nvim/init.lua <CR>"),
+            dashboard.button("q", icons.alpha.Quit .. "Quit Neovim", ":qa<CR>"),
         }
 
         local function footer()

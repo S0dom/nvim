@@ -1,3 +1,5 @@
+local icons = require "kali.share.icons"
+
 return {
     "akinsho/bufferline.nvim",
     version = "*",
@@ -16,14 +18,14 @@ return {
                 left_mouse_command = "buffer %d", -- can be a string | function, | false see "Mouse actions"
                 middle_mouse_command = nil, -- can be a string | function, | false see "Mouse actions"
                 indicator = {
-                    icon = '▎', -- this should be omitted if indicator style is not 'icon'
+                    icon = icons.bufferline.Indicator, -- this should be omitted if indicator style is not 'icon'
                     style = 'icon', -- 'icon' | 'underline' | 'none',
                 },
-                buffer_close_icon = '󰅖',
-                modified_icon = '●',
-                close_icon = '',
-                left_trunc_marker = '',
-                right_trunc_marker = '',
+                buffer_close_icon = icons.bufferline.CloseBuffer,
+                modified_icon = icons.bufferline.Modified,
+                close_icon = icons.bufferline.Close,
+                left_trunc_marker = icons.bufferline.LeftMarker,
+                right_trunc_marker = icons.bufferline.RightMarker,
                 --- name_formatter can be used to change the buffer's label in the bufferline.
                 --- Please note some names can/will break the
                 --- bufferline so use this at your discretion knowing that it has

@@ -1,14 +1,16 @@
+local icons = require "kali.share.icons"
+
 return {
     "lewis6991/gitsigns.nvim",
     opts = function()
         return {
             signs = {
-                add          = { text = '▎' },
-                change       = { text = '▎' },
-                delete       = { text = '' },
-                topdelete    = { text = '' },
-                changedelete = { text = '▎' },
-                untracked    = { text = '▎' },
+                add          = { text = icons.gitsigns.Add },
+                change       = { text = icons.gitsigns.Add },
+                delete       = { text = icons.gitsigns.Delete },
+                topdelete    = { text = icons.gitsigns.Delete },
+                changedelete = { text = '' },
+                untracked    = { text = icons.gitsigns.Add },
             },
             signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
             numhl = false,     -- Toggle with `:Gitsigns toggle_numhl`
@@ -82,6 +84,12 @@ return {
 
                 -- Text object
                 map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = "Select hunk" })
+
+                require("which-key").register({
+                    ["<leader>gh"] = { name = "+Hunk" },
+                    ["<leader>gt"] = { name = "+Toggle" },
+                    ["<leader>g"] = { name = "+ Git" },
+                })
             end
         }
     end

@@ -1,3 +1,5 @@
+local icons = require "kali.share.icons"
+
 return {
     "nvim-lualine/lualine.nvim",
     dependencies = {
@@ -172,7 +174,10 @@ return {
         ins_left {
             'diagnostics',
             sources = { 'nvim_diagnostic' },
-            symbols = { error = ' ', warn = ' ', info = ' ' },
+            symbols = {
+                error = icons.diagnostics.Error,
+                warn = icons.diagnostics.Warning,
+                info = icons.diagnostics.Info },
             diagnostics_color = {
                 color_error = { fg = colors.red },
                 color_warn = { fg = colors.yellow },
@@ -190,23 +195,60 @@ return {
 
         ins_left {
             -- Lsp server name .
-            function()
-                local msg = 'No Active Lsp'
-                local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-                local clients = vim.lsp.get_active_clients()
-                if next(clients) == nil then
+            -- function()
+            --     local msg = 'No Active Lsp'
+            --     local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+            --     local clients = vim.lsp.get_active_clients()
+            --     if next(clients) == nil then
+            --         return msg
+            --     end
+            --     for _, client in ipairs(clients) do
+            --         local filetypes = client.config.filetypes
+            --         if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+            --             return client.name
+            --         end
+            --     end
+            --     return msg
+            -- end,
+            -- icon = ' LSP:',
+            -- color = { fg = '#ffffff', gui = 'bold' },
+            function(msg)
+                msg = msg or ""
+                local buf_clients = vim.lsp.get_active_clients { bufnr = 0 }
+
+                if next(buf_clients) == nil then
+                    if type(msg) == "boolean" or #msg == 0 then
+                        return ""
+                    end
                     return msg
                 end
-                for _, client in ipairs(clients) do
-                    local filetypes = client.config.filetypes
-                    if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                        return client.name
+
+                local buf_ft = vim.bo.filetype
+                local buf_client_names = {}
+
+                -- add client
+                for _, client in pairs(buf_clients) do
+                    if client.name ~= "null-ls" then
+                        table.insert(buf_client_names, client.name)
                     end
                 end
-                return msg
+
+                local hash = {}
+                local client_names = {}
+                for _, v in ipairs(buf_client_names) do
+                    if not hash[v] then
+                        client_names[#client_names + 1] = v
+                        hash[v] = true
+                    end
+                end
+                table.sort(client_names)
+                return "  " .. table.concat(client_names, ", ") .. " "
             end,
-            icon = ' LSP:',
-            color = { fg = '#ffffff', gui = 'bold' },
+            -- icon = icons.ui.Code,
+            colored = true,
+            on_click = function()
+                vim.cmd [[LspInfo]]
+            end,
         }
 
         -- Add components to right sections

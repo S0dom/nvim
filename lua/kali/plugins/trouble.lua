@@ -1,3 +1,5 @@
+local icons = require "kali.share.icons"
+
 return {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -52,10 +54,10 @@ return {
             include_declaration = { "lsp_references", "lsp_implementations", "lsp_definitions" }, -- for the given modes, include the declaration of the current symbol in the results
             signs = {
                 -- icons / text used for a diagnostic
-                error = "",
-                warning = "",
-                hint = "",
-                information = "",
+                error = icons.diagnostics.Error,
+                warning = icons.diagnostics.Warning,
+                hint = icons.diagnostics.Hint,
+                information = icons.diagnostics.Info,
                 other = "",
             },
             use_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client

@@ -107,8 +107,16 @@ return {
             lspconfig["html"].setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
-                filetypes = { "html", "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact",
-                    "typescript.tsx" }
+                -- filetypes = { "html", "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact",
+                -- "typescript.tsx" }
+                init_options = {
+                    configurationSection = { "html", "css", "javascript" },
+                    embeddedLanguages = {
+                        css = true,
+                        javascript = true
+                    },
+                    provideFormatter = false
+                }
             })
 
             lspconfig["emmet_language_server"].setup({
@@ -144,29 +152,29 @@ return {
                 on_attach = on_attach,
             })
 
-            -- lspconfig["tsserver"].setup({
-            --     capabilities = capabilities,
-            --     on_attach = on_attach,
-            --     settings = {
-            --         typescript = {
-            --             format = {
-            --                 indentSize = vim.o.shiftwidth,
-            --                 convertTabsToSpaces = vim.o.expandtab,
-            --                 tabSize = vim.o.tabstop,
-            --             }
-            --         },
-            --         javascript = {
-            --             format = {
-            --                 indentSize = vim.o.shiftwidth,
-            --                 convertTabsToSpaces = vim.o.expandtab,
-            --                 tabSize = vim.o.tabstop,
-            --             }
-            --         },
-            --         completion = {
-            --             completeFunctionCalls = true,
-            --         },
-            --     },
-            -- })
+            lspconfig["tsserver"].setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+                settings = {
+                    typescript = {
+                        format = {
+                            indentSize = vim.o.shiftwidth,
+                            convertTabsToSpaces = vim.o.expandtab,
+                            tabSize = vim.o.tabstop,
+                        }
+                    },
+                    javascript = {
+                        format = {
+                            indentSize = vim.o.shiftwidth,
+                            convertTabsToSpaces = vim.o.expandtab,
+                            tabSize = vim.o.tabstop,
+                        }
+                    },
+                    completion = {
+                        completeFunctionCalls = true,
+                    },
+                },
+            })
 
             lspconfig["tailwindcss"].setup({
                 capabilities = capabilities,
@@ -224,7 +232,35 @@ return {
             lspconfig["volar"].setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
-                filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' }, --, 'json' },
+                filetypes = { 'vue' }, -- if typescript-tools still slow : { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' }, --, 'json' },
+                init_options = {
+                    typescript = {
+                        tsdk =
+                            vim.env.HOME ..
+                            '/.local/share/nvim/mason/packages/vue-language-server/node_modules/typescript/lib'
+                    },
+                    languageFeatures = {
+                        implementation = true,
+                        references = true,
+                        definition = true,
+                        typeDefinition = true,
+                        callHierarchy = true,
+                        hover = true,
+                        rename = true,
+                        renameFileRefactoring = true,
+                        signatureHelp = true,
+                        codeAction = true,
+                        workspaceSymbol = true,
+                        diagnostics = true,
+                        semanticTokens = true,
+                        completion = {
+                            defaultTagNameCase = 'both',
+                            defaultAttrNameCase = 'kebabCase',
+                            getDocumentNameCasesRequest = false,
+                            getDocumentSelectionRequest = false,
+                        },
+                    }
+                },
             })
 
             lspconfig["lemminx"].setup({

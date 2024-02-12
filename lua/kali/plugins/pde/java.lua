@@ -78,7 +78,7 @@ return {
                         vim.keymap.set("v", "<leader>ljm", "<esc><Cmd>lua require('jdtls').extract_method(true)<CR>",
                             { silent = true, buffer = bufnr, noremap = true, desc = "Extract Method" })
 
-                        -- vim.lsp.codelens.refresh()
+                        vim.lsp.codelens.refresh()
                         jdtls.setup_dap { hotcodereplace = "auto" }
                         require("jdtls.dap").setup_dap_main_class_configs()
                         require("jdtls.setup").add_commands()
@@ -192,8 +192,8 @@ return {
                             },
                         },
                         init_options = {
-                            -- bundles = bundles,
-                            -- extendedClientCapabilities = extendedClientCapabilities,
+                            bundles = bundles,
+                            extendedClientCapabilities = extendedClientCapabilities,
                         },
                     }
                     require("jdtls").start_or_attach(config)

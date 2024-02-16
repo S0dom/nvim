@@ -251,6 +251,17 @@ return {
             end,
         }
 
+        -- TODO: conditional when in HTTP file
+        -- ins_right {
+        --     "rest"
+        -- }
+
+        -- To custom icon and color
+        -- ins_right {
+        --     "rest",
+        --     icon = "",
+        --     fg = "#428890"
+        -- }
         -- Add components to right sections
         ins_right {
             'o:encoding',       -- option component same as &encoding in viml

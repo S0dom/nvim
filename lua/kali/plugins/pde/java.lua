@@ -36,6 +36,7 @@ end
 return {
     {
         "mfussenegger/nvim-jdtls",
+        ft = { "java" },
         dependencies = { "mfussenegger/nvim-dap", "neovim/nvim-lspconfig" },
         -- event = "VeryLazy",
         config = function()
@@ -118,35 +119,13 @@ return {
                             "-data",
                             workspace_dir,
                         },
-                        root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew", "pom.xml",
-                            "build.gradle" },
+                        root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew", "pom.xml",
+                            "build.gradle" }),
                         capabilities = capabilities,
                         on_attach = jdtls_on_attach,
 
                         settings = {
                             java = {
-                                autobuild = { enabled = false },
-                                signatureHelp = { enabled = true },
-                                contentProvider = { preferred = "fernflower" },
-                                saveActions = {
-                                    organizeImports = true,
-                                },
-                                sources = {
-                                    organizeImports = {
-                                        starThreshold = 9999,
-                                        staticStarThreshold = 9999,
-                                    },
-                                },
-                                codeGeneration = {
-                                    toString = {
-                                        template =
-                                        "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
-                                    },
-                                    hashCodeEquals = {
-                                        useJava7Objects = true,
-                                    },
-                                    useBlocks = true,
-                                },
                                 eclipse = {
                                     downloadSources = true,
                                 },
@@ -154,12 +133,12 @@ return {
                                     updateBuildConfiguration = "interactive",
                                     -- NOTE: Add the available runtimes here
                                     -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
-                                    -- runtimes = {
-                                    --   {
-                                    --     name = "JavaSE-18",
-                                    --     path = "~/.sdkman/candidates/java/18.0.2-sem",
-                                    --   },
-                                    -- },
+                                    runtimes = {
+                                        -- {
+                                        --     name = "JavaSE-17",
+                                        --     path = "~/.sdkman/candidates/java/17.0.10-graal",
+                                        -- },
+                                    },
                                 },
                                 maven = {
                                     downloadSources = true,
@@ -189,6 +168,28 @@ return {
                                 --     profile = "GoogleStyle",
                                 --   },
                                 -- },
+                            },
+                            autobuild = { enabled = true },
+                            signatureHelp = { enabled = true },
+                            contentProvider = { preferred = "fernflower" },
+                            saveActions = {
+                                organizeImports = true,
+                            },
+                            sources = {
+                                organizeImports = {
+                                    starThreshold = 9999,
+                                    staticStarThreshold = 9999,
+                                },
+                            },
+                            codeGeneration = {
+                                toString = {
+                                    template =
+                                    "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+                                },
+                                hashCodeEquals = {
+                                    useJava7Objects = true,
+                                },
+                                useBlocks = true,
                             },
                         },
                         init_options = {

@@ -37,8 +37,8 @@ return {
             end
         },
     },
-    opts = function()
-        return {
+    config = function()
+        require("nvim-treesitter.configs").setup{
             ensure_installed = "all",
             sync_install = false,
             highlight = {

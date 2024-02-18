@@ -36,7 +36,7 @@ end
 return {
     {
         "mfussenegger/nvim-jdtls",
-        ft = { "java" },
+        -- ft = { "java" },
         dependencies = { "mfussenegger/nvim-dap", "neovim/nvim-lspconfig" },
         -- event = "VeryLazy",
         config = function()
@@ -129,17 +129,17 @@ return {
                                 eclipse = {
                                     downloadSources = true,
                                 },
-                                configuration = {
-                                    updateBuildConfiguration = "interactive",
-                                    -- NOTE: Add the available runtimes here
-                                    -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
-                                    runtimes = {
-                                        -- {
-                                        --     name = "JavaSE-17",
-                                        --     path = "~/.sdkman/candidates/java/17.0.10-graal",
-                                        -- },
-                                    },
-                                },
+                                --     configuration = {
+                                --         updateBuildConfiguration = "interactive",
+                                --         -- NOTE: Add the available runtimes here
+                                --         -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+                                --         runtimes = {
+                                --             -- {
+                                --             --     name = "JavaSE-17",
+                                --             --     path = "~/.sdkman/candidates/java/17.0.10-graal",
+                                --             -- },
+                                --         },
+                                --     },
                                 maven = {
                                     downloadSources = true,
                                 },
@@ -152,44 +152,44 @@ return {
                                 references = {
                                     includeDecompiledSources = true,
                                 },
-                                inlayHints = {
-                                    parameterNames = {
-                                        enabled = "all", -- literals, all, none
-                                    },
-                                },
+                                --     inlayHints = {
+                                --         parameterNames = {
+                                --             enabled = "all", -- literals, all, none
+                                --         },
+                                --     },
                                 format = {
                                     enabled = true,
                                 },
-                                -- NOTE: We can set the formatter to use different styles
-                                -- format = {
-                                --   enabled = true,
-                                --   settings = {
-                                --     url = vim.fn.stdpath "config" .. "/lang-servers/intellij-java-google-style.xml",
-                                --     profile = "GoogleStyle",
-                                --   },
-                                -- },
-                            },
-                            autobuild = { enabled = true },
-                            signatureHelp = { enabled = true },
-                            contentProvider = { preferred = "fernflower" },
-                            saveActions = {
-                                organizeImports = true,
-                            },
-                            sources = {
-                                organizeImports = {
-                                    starThreshold = 9999,
-                                    staticStarThreshold = 9999,
+                                --     -- NOTE: We can set the formatter to use different styles
+                                --     -- format = {
+                                --     --   enabled = true,
+                                --     --   settings = {
+                                --     --     url = vim.fn.stdpath "config" .. "/lang-servers/intellij-java-google-style.xml",
+                                --     --     profile = "GoogleStyle",
+                                --     --   },
+                                --     -- },
+                                autobuild = { enabled = true },
+                                signatureHelp = { enabled = true },
+                                contentProvider = { preferred = "fernflower" },
+                                saveActions = {
+                                    organizeImports = true,
                                 },
-                            },
-                            codeGeneration = {
-                                toString = {
-                                    template =
-                                    "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+                                sources = {
+                                    organizeImports = {
+                                        starThreshold = 9999,
+                                        staticStarThreshold = 9999,
+                                    },
                                 },
-                                hashCodeEquals = {
-                                    useJava7Objects = true,
+                                codeGeneration = {
+                                    toString = {
+                                        template =
+                                        "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+                                    },
+                                    hashCodeEquals = {
+                                        useJava7Objects = true,
+                                    },
+                                    useBlocks = true,
                                 },
-                                useBlocks = true,
                             },
                         },
                         init_options = {

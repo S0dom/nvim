@@ -81,20 +81,20 @@ return {
                         end
                     end)
                 end,
-                -- eslint = function()
-                --     vim.api.nvim_create_autocmd("BufWritePre", {
-                --         callback = function(event)
-                --             local client = vim.lsp.get_active_clients({ bufnr = event.buf, name = "eslint" })[1]
-                --             if client then
-                --                 local diag = vim.diagnostic.get(event.buf,
-                --                     { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
-                --                 if #diag > 0 then
-                --                     vim.cmd "EslintFixAll"
-                --                 end
-                --             end
-                --         end,
-                --     })
-                -- end,
+                eslint = function()
+                    vim.api.nvim_create_autocmd("BufWritePre", {
+                        callback = function(event)
+                            local client = vim.lsp.get_active_clients({ bufnr = event.buf, name = "eslint" })[1]
+                            if client then
+                                local diag = vim.diagnostic.get(event.buf,
+                                    { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
+                                if #diag > 0 then
+                                    vim.cmd "EslintFixAll"
+                                end
+                            end
+                        end,
+                    })
+                end,
             },
         },
         config = function()
@@ -104,11 +104,14 @@ return {
             -- local capabilities = cmp_nvim_lsp.default_capabilities()
             local on_attach, capabilities = require("kali.share.utils")
 
-            lspconfig["html"].setup({
-                capabilities = capabilities,
+            local capabilitiesHTMLCss = vim.lsp.protocol.make_client_capabilities()
+            capabilitiesHTMLCss.textDocument.completion.completionItem.snippetSupport = true
+
+            lspconfig.html.setup({
+                capabilities = capabilitiesHTMLCss,
                 on_attach = on_attach,
-                -- filetypes = { "html", "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact",
-                -- "typescript.tsx" }
+                filetypes = { "html", "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact",
+                    "typescript.tsx" },
                 init_options = {
                     configurationSection = { "html", "css", "javascript" },
                     embeddedLanguages = {
@@ -119,7 +122,12 @@ return {
                 }
             })
 
-            lspconfig["emmet_language_server"].setup({
+            lspconfig.cssls.setup({
+                capabilities = capabilitiesHTMLCss,
+                on_attach = on_attach,
+            })
+
+            lspconfig.emmet_language_server.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
                 filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte",
@@ -141,54 +149,55 @@ return {
                     excludelanguages = {},
                     html = {
                         options = {
+                            -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
                             ["bem.enabled"] = true,
                         },
                     },
                 },
             })
 
-            lspconfig["cssls"].setup({
-                capabilities = capabilities,
-                on_attach = on_attach,
-            })
+            -- lspconfig.tsserver.setup({
+            --     capabilities = capabilities,
+            --     on_attach = on_attach,
+            --     init_options = {
+            --         preferences = {
+            --             disableSuggestions = true,
+            --         }
+            --     },
+            --     settings = {
+            --         typescript = {
+            --             format = {
+            --                 indentSize = vim.o.shiftwidth,
+            --                 convertTabsToSpaces = vim.o.expandtab,
+            --                 tabSize = vim.o.tabstop,
+            --             }
+            --         },
+            --         javascript = {
+            --             format = {
+            --                 indentSize = vim.o.shiftwidth,
+            --                 convertTabsToSpaces = vim.o.expandtab,
+            --                 tabSize = vim.o.tabstop,
+            --             }
+            --         },
+            --         completion = {
+            --             completeFunctionCalls = true,
+            --         },
+            --     },
+            -- })
 
-            lspconfig["tsserver"].setup({
-                capabilities = capabilities,
-                on_attach = on_attach,
-                settings = {
-                    typescript = {
-                        format = {
-                            indentSize = vim.o.shiftwidth,
-                            convertTabsToSpaces = vim.o.expandtab,
-                            tabSize = vim.o.tabstop,
-                        }
-                    },
-                    javascript = {
-                        format = {
-                            indentSize = vim.o.shiftwidth,
-                            convertTabsToSpaces = vim.o.expandtab,
-                            tabSize = vim.o.tabstop,
-                        }
-                    },
-                    completion = {
-                        completeFunctionCalls = true,
-                    },
-                },
-            })
-
-            lspconfig["tailwindcss"].setup({
+            lspconfig.tailwindcss.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
                 filetype_exlude = { "markdown" }
             })
 
-            lspconfig["eslint"].setup({
+            lspconfig.eslint.setup({
                 settings = {
                     workingDirecctory = { mode = "auto" },
                 }
             })
 
-            lspconfig["lua_ls"].setup({
+            lspconfig.lua_ls.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
                 on_init = function(client)
@@ -229,7 +238,7 @@ return {
                 end
             })
 
-            lspconfig["volar"].setup({
+            lspconfig.volar.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
                 filetypes = { 'vue' }, -- if typescript-tools still slow : { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' }, --, 'json' },
@@ -263,18 +272,18 @@ return {
                 },
             })
 
-            lspconfig["lemminx"].setup({
+            lspconfig.lemminx.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
                 filetypes = { 'xml', 'xsd', 'xsl', 'xslt', 'svg', 'fxml' },
             })
 
-            lspconfig["pyright"].setup({
+            lspconfig.pyright.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
             })
 
-            lspconfig["gopls"].setup({
+            lspconfig.gopls.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
                 settings = {
@@ -291,12 +300,12 @@ return {
                 },
             })
 
-            lspconfig["taplo"].setup({
+            lspconfig.taplo.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
             })
 
-            lspconfig["clangd"].setup({
+            lspconfig.clangd.setup({
                 capabilities = capabilities,
                 on_attach = function()
                     on_attach()
@@ -305,12 +314,12 @@ return {
                 end,
             })
 
-            lspconfig["jsonls"].setup {
+            lspconfig.jsonls.setup {
                 capabilities = capabilities,
                 on_attach = on_attach,
             }
 
-            lspconfig["omnisharp"].setup {
+            lspconfig.omnisharp.setup {
                 capabilities = capabilities,
                 on_attach = on_attach,
                 cmd = { "dotnet", "/home/kali/.local/share/nvim/mason/packages/omnisharp/libexec/OmniSharp.dll" },
@@ -318,22 +327,36 @@ return {
                 enable_import_completion = true,
             }
 
-            lspconfig["bashls"].setup {
+            lspconfig.bashls.setup {
                 capabilities = capabilities,
                 on_attach = on_attach,
             }
 
-            lspconfig["marksman"].setup {
+            lspconfig.marksman.setup {
                 capabilities = capabilities,
                 on_attach = on_attach,
             }
 
-            lspconfig["grammarly"].setup {
+            lspconfig.grammarly.setup {
                 capabilities = capabilities,
                 on_attach = on_attach,
             }
 
-            lspconfig["phpactor"].setup {
+            lspconfig.phpactor.setup {
+                capabilities = capabilities,
+                on_attach = on_attach,
+            }
+
+            lspconfig.kotlin_language_server.setup {
+                capabilities = capabilities,
+                on_attach = on_attach,
+            }
+
+            -- install typescript and angular/language-server in project:
+            -- npm install --save-dev typescript
+            -- npm install --save-dev @angular/language-service
+
+            lspconfig.angularls.setup {
                 capabilities = capabilities,
                 on_attach = on_attach,
             }

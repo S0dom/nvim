@@ -113,7 +113,8 @@ return {
             ["<leader>lc"] = { name = "+󰙴 Crates" },
             ["<leader>lj"] = { name = "+ Java" },
             ["<leader>lz"] = { name = "+ Color" },
-            ["<leader>t"] = { name = "+󰙨 Test" },
+            ["<leader>lt"] = { name = "+󰙨 Test" },
+            ["<leader>t"] = { name = "+ ToggleTerm" }
         })
         local map_opts = {
             mode = "n", -- NORMAL mode

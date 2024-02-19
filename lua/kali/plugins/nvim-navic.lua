@@ -8,7 +8,7 @@ return {
             icons = icons.navic,
             lsp = {
                 auto_attach = true,
-                preference = nil,
+                preference = { "typescript-tools" },
             },
             highlight = true,
             separator = " > ",

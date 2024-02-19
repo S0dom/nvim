@@ -4,11 +4,20 @@ return {
     version = "2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
     -- install jsregexp (optional!).
     dependencies = {
-        "rafamadriz/friendly-snippets",
-        config = function()
-            require("luasnip.loaders.from_vscode").lazy_load()
-        end
+        {
+            "rafamadriz/friendly-snippets",
+            config = function()
+                require("luasnip.loaders.from_vscode").lazy_load()
+            end
+        },
+        {
+            "johnpapa/vscode-angular-snippets",
+            config = function()
+                require("luasnip.loaders.from_vscode").lazy_load()
+            end
+        }
     },
+
     build = "make install_jsregexp",
     config = function()
         local ls = require "luasnip"

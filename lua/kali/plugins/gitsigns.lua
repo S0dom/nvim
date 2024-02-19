@@ -66,6 +66,7 @@ return {
                 end, { expr = true })
 
                 -- Actions
+                map('n', '<leader>gg', "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { desc = "Lazygit" })
                 map('n', '<leader>ghs', gs.stage_hunk, { desc = "Stage hunk" })
                 map('n', '<leader>ghr', gs.reset_hunk, { desc = "Reset hunk" })
                 map('v', '<leader>ghs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end,

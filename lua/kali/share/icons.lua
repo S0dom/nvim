@@ -52,6 +52,7 @@ return {
         FindText      = "  ",
         Configuration = "  ",
         Quit          = "  ",
+        Session       = "  ",
     },
     bufferline = {
         CloseBuffer = "󰅖",

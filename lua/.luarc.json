@@ -1,6 +1,7 @@
 {
     "diagnostics.globals": [
         "vim",
-        "map_opts"
+        "map_opts",
+        "setup"
     ]
 }

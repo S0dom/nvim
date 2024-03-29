@@ -66,6 +66,7 @@ return {
         telescope.load_extension("fzf")
         telescope.load_extension("notify")
         telescope.load_extension("dap")
+        telescope.load_extension("yank_history")
 
         local keymap = vim.keymap.set
 

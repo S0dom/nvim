@@ -177,7 +177,8 @@ return {
             symbols = {
                 error = icons.diagnostics.Error,
                 warn = icons.diagnostics.Warning,
-                info = icons.diagnostics.Info },
+                info = icons.diagnostics.Info
+            },
             diagnostics_color = {
                 color_error = { fg = colors.red },
                 color_warn = { fg = colors.yellow },
